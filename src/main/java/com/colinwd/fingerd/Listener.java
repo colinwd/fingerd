@@ -1,3 +1,7 @@
+package com.colinwd.fingerd;
+
+import com.colinwd.fingerd.query.Query;
+import com.colinwd.fingerd.query.QueryParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Optional;
 
 class Listener {
 
@@ -23,9 +28,10 @@ class Listener {
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
 
-            String inputLine;
+            Optional<String> inputLine;
 
-            while ((inputLine = in.readLine()) != null) {
+            while ((inputLine = Optional.ofNullable(in.readLine())).isPresent()) {
+                Optional<Query> query = inputLine.map((s) -> new QueryParser().parse(s));
                 String response = "Howdy";
                 out.println(response);
                 break;

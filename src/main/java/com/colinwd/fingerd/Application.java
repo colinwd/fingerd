@@ -1,3 +1,5 @@
+package com.colinwd.fingerd;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +11,7 @@ public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     //Modified port number from RFC to avoid root permissions requirement on ports < 1024
-    private static final int PORT = 8079;
+    static final int PORT = 8079;
 
     public static void main(String[] args) {
         configureLogging();
