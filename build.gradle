@@ -9,7 +9,7 @@ mainClassName = "Application"
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
 
     testCompile 'junit:junit:4.12'
 }
