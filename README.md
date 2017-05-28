@@ -2,6 +2,15 @@
 
 This is a minimal implementation of a finger server as an exercise.
 
+## Usage
+
+To run the service, you can use the provided Gradle wrapper: `./gradlew run`
+`^C` will stop the service.
+
+To query the service you can telnet to it: `telnet localhost 8079`
+Sending an empty query to it will list all users, or you can type a username to
+get that user's listing.
+
 ## What features did you choose to implement and why?
 
 Given the relatively constrained size of Finger compared to some other RFCs,

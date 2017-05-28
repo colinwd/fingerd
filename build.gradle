@@ -5,7 +5,7 @@ repositories {
     mavenCentral()
 }
 
-mainClassName = "Application"
+mainClassName = "com.colinwd.fingerd.Application"
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.25'
