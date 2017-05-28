@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 
 /*
 The Finger query specification is defined:
@@ -17,25 +18,15 @@ The Finger query specification is defined:
     {C}     ::= <CRLF>
  */
 public class QueryParser {
+
     public Query parse(String input) {
-        if (StringUtils.isEmpty(input) || !StringUtils.endsWith(input, "\r\n")) {
-            throw new MalformedQueryException("Empty query is not accepted.");
-        }
-
-        if (StringUtils.equals(input, "\r\n")) {
-            return Query.list();
-        }
-
-        List<String> tokens = tokenize(input);
-        if (tokens.isEmpty()) {
-            throw new MalformedQueryException(("Unable to parse input: " + input));
-        } else {
-            return parse(tokens);
-        }
+        return parse(tokenize(input));
     }
 
-    private Query parse(List<String> tokens) {
-        for (String token : tokens) {
+    private Query parse(Stack<String> tokens) {
+        while (tokens.iterator().hasNext()) {
+            String token = tokens.pop();
+
             if (Objects.equals(token, "/W")) {
                 //Not implementing verbose mode for now
                 continue;
@@ -46,11 +37,17 @@ public class QueryParser {
             }
         }
 
-        //If we fall through here, something's gone wrong
-        throw new MalformedQueryException("Unable to parse input.");
+        return Query.list();
     }
 
-    private List<String> tokenize(String input) {
-        return Arrays.asList(input.split("\\s"));
+    private Stack<String> tokenize(String input) {
+        Stack<String> tokens = new Stack<>();
+        List<String> split = Arrays.asList(input.split("\\s"));
+        split.stream().forEach(s -> {
+            if (StringUtils.isNotBlank(s)) {
+                tokens.add(s);
+            }
+        });
+        return tokens;
     }
 }

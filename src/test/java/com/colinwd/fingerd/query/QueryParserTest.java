@@ -29,4 +29,10 @@ public class QueryParserTest {
     public void inputWithHostnameIsUnsupported() {
         parser.parse("colin@hostname\r\n");
     }
+
+    @Test
+    public void onlyVerboseFlag() {
+        Query query = parser.parse("/W\r\n");
+        Assert.assertNotEquals("/W", query.getUsername());
+    }
 }
